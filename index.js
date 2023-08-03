@@ -31,12 +31,22 @@ async function run() {
         const taskCollection = client.db('todoDB').collection('allTasks')
 
         // Get all tasks api
-        app.get('/all-tasks', async(req, res)=>{
+        app.get('/all-tasks', async (req, res) => {
             const result = await taskCollection.find().toArray();
             res.send(result)
         })
+        
+        // Get One task api
+        app.get('task/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await taskCollection.findOne(query)
+            res.send(result)
+        })
 
-       
+
+
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
