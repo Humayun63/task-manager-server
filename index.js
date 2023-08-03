@@ -52,10 +52,29 @@ async function run() {
         })
 
         // Delete a task api
-        app.delete('task/delete/:id', async(req, res)=>{
+        app.delete('tasks/delete/:id', async (req, res) => {
             const id = req.params.id;
-            const filter = {_id: new ObjectId(id)}
+            const filter = { _id: new ObjectId(id) }
             const result = await taskCollection.deleteOne(filter)
+            res.send(result)
+        })
+
+        // Update a task api
+        app.put('/tasks/update/:id', async (req, res) => {
+            const id = req.params.id;
+            const task = req.body;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+
+            const updatedTask = {
+                $set:{
+                    title: task.title,
+                    description: task.description,
+                    status: task.status
+                }
+            }
+
+            const result = await taskCollection.updateOne(filter, updatedTask, options)
             res.send(result)
         })
 
