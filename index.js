@@ -36,31 +36,7 @@ async function run() {
             res.send(result)
         })
 
-        // Get One task api
-        app.get('task/:id', async(req, res)=>{
-            const id = req.params.id;
-            const query = {_id: new ObjectId(id)}
-            const result = await taskCollection.findOne(query)
-            res.send(result) 
-        })
-
-        // Create a new task api
-        app.post('/tasks/new', async(req, res)=>{
-            const newTask = req.body;
-            const result = await taskCollection.insertOne(newTask)
-            res.send(result)
-        })
-
-        // 
-        
-        // Delete a task
-        app.post('tasks/delete', async(req, res)=>{
-            const id = req.params.id;
-            const filter = {_id: new ObjectId(id)}
-            const result = await taskCollection.deleteOne(filter)
-            res.send(result)
-        })
-
+       
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
