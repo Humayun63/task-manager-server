@@ -35,7 +35,7 @@ async function run() {
             const result = await taskCollection.find().toArray();
             res.send(result)
         })
-        
+
         // Get One task api
         app.get('task/:id', async (req, res) => {
             const id = req.params.id;
@@ -43,6 +43,15 @@ async function run() {
             const result = await taskCollection.findOne(query)
             res.send(result)
         })
+
+        // Create a new task api
+        app.post('/tasks/new', async (req, res) => {
+            const newTask = req.body;
+            const result = await taskCollection.insertOne(newTask)
+            res.send(result)
+        })
+
+
 
 
 
